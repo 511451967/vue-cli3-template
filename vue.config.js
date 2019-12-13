@@ -75,6 +75,12 @@ module.exports = {
     config.resolve.alias
       .set('@', resolve('src'))
       .set('assets', resolve('src/assets'));
+    // 调整内联文件的大小限制,默认4kb
+    config.module
+      .rule('images')
+        .use('url-loader')
+          .loader('url-loader')
+          .tap(options => Object.assign(options, { limit: 4096 }));
   },
   css: {
     requireModuleExtension: true, //只有 *.module.[ext] 结尾的文件才会被视作 CSS Modules 模块
